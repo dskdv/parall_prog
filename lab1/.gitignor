@@ -1,0 +1,17 @@
+__pycache__/
+*.pyc
+*.pyo
+
+# Входные и выходные данные (воспроизводятся скриптами)
+matrix1.txt
+matrix2.txt
+result.txt
+
+out/
+build/
+.vs/
+
+.vscode/
+
+Thumbs.db
+.DS_Store
