@@ -1,8 +1,3 @@
-// ============================================================
-//  Laboratory work #2
-//  Parallel matrix multiplication using OpenMP
-// ============================================================
-
 #include <iostream>
 #include <vector>
 #include <cstdlib>
@@ -17,9 +12,6 @@ using namespace std;
 using Clock = chrono::high_resolution_clock;
 using Seconds = chrono::duration<double>;
 
-// ------------------------------------------------------------
-//  Generate an n x n matrix with random real values
-// ------------------------------------------------------------
 vector<vector<double>> makeMatrix(int n) {
     vector<vector<double>> m(n, vector<double>(n));
     for (int i = 0; i < n; ++i) {
@@ -30,9 +22,6 @@ vector<vector<double>> makeMatrix(int n) {
     return m;
 }
 
-// ------------------------------------------------------------
-//  Sequential multiplication (reference)
-// ------------------------------------------------------------
 vector<vector<double>> mulSeq(const vector<vector<double>>& A,
     const vector<vector<double>>& B,
     int n) {
@@ -49,9 +38,6 @@ vector<vector<double>> mulSeq(const vector<vector<double>>& A,
     return C;
 }
 
-// ------------------------------------------------------------
-//  Parallel multiplication with OpenMP
-// ------------------------------------------------------------
 vector<vector<double>> mulOmp(const vector<vector<double>>& A,
     const vector<vector<double>>& B,
     int n) {
@@ -69,9 +55,6 @@ vector<vector<double>> mulOmp(const vector<vector<double>>& A,
     return C;
 }
 
-// ------------------------------------------------------------
-//  Maximum absolute deviation between two matrices
-// ------------------------------------------------------------
 double maxDiff(const vector<vector<double>>& X,
     const vector<vector<double>>& Y) {
     double d = 0.0;
@@ -85,9 +68,6 @@ double maxDiff(const vector<vector<double>>& X,
     return d;
 }
 
-// ------------------------------------------------------------
-//  Measure one OpenMP run. Returns time (sec), sets gflops.
-// ------------------------------------------------------------
 double measureOmp(const vector<vector<double>>& A,
     const vector<vector<double>>& B,
     int n,
@@ -108,9 +88,6 @@ double measureOmp(const vector<vector<double>>& A,
     return sec;
 }
 
-// ------------------------------------------------------------
-//  Correctness verification: parallel result vs sequential
-// ------------------------------------------------------------
 void checkCorrectness(int n, int threads) {
     srand(12345);
     auto A = makeMatrix(n);
@@ -135,9 +112,6 @@ void checkCorrectness(int n, int threads) {
     }
 }
 
-// ------------------------------------------------------------
-//  Main
-// ------------------------------------------------------------
 int main() {
 #ifdef _OPENMP
     cout << "OpenMP supported, version: " << _OPENMP << endl;
@@ -153,13 +127,11 @@ int main() {
     vector<int> sizes = { 200, 400, 800, 1200, 1600, 2000 };
     vector<int> threads = { 1, 2, 4, 8 };
 
-    // -------- [1] Correctness verification --------
     cout << "\n[1] Correctness verification of parallel multiplication" << endl;
     cout << string(80, '-') << endl;
     checkCorrectness(200, 4);
     checkCorrectness(400, 8);
 
-    // -------- [2] Detailed run over all combinations --------
     cout << "\n[2] Experiments: size x threads" << endl;
     cout << string(80, '-') << endl;
     cout << left
@@ -188,7 +160,6 @@ int main() {
         }
     }
 
-    // -------- [3] Summary times table --------
     cout << "\n[3] Summary times table (seconds)" << endl;
     cout << string(80, '-') << endl;
     cout << setw(8) << "N";
@@ -217,7 +188,6 @@ int main() {
         cout << endl;
     }
 
-    // -------- [4] Speedup table --------
     cout << "\n[4] Speedup relative to 1 thread" << endl;
     cout << string(80, '-') << endl;
     cout << setw(8) << "N";

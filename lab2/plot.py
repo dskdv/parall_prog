@@ -1,10 +1,8 @@
 import matplotlib.pyplot as plt
 
-# --- Настраиваем шрифт с поддержкой кириллицы ---
 plt.rcParams['font.family'] = 'Arial'
 plt.rcParams['axes.unicode_minus'] = False
 
-# ---- Читаем таблицу из results.txt после нужного заголовка ----
 def parse_table(filename, section_marker):
     with open(filename, "r", encoding="utf-16") as f:
         lines = f.readlines()
@@ -47,7 +45,6 @@ def parse_table(filename, section_marker):
 
 filename = "results.txt"
 
-# ---- График 1: время от размера ----
 sizes, threads_labels, times = parse_table(filename, "[3] Summary times")
 
 plt.figure(figsize=(10, 6))
@@ -66,7 +63,6 @@ plt.savefig("graph_time.png", dpi=150)
 plt.show()
 print("Сохранено: graph_time.png")
 
-# ---- График 2: ускорение ----
 sizes, threads_labels, speedups = parse_table(filename, "[4] Speedup")
 
 plt.figure(figsize=(10, 6))
@@ -77,7 +73,6 @@ for i, t in enumerate(threads_labels):
     plt.plot(sizes, speedups[t], marker=markers[i % len(markers)],
              linestyle='-', linewidth=2, label=f"{n_threads} поток(ов)")
 
-# Идеальное линейное ускорение — пунктиром
 for t in threads_labels:
     if t == "T=1":
         continue
